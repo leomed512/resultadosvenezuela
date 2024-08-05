@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    font-family: "Oswald" sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#map { height: 90vh;
+width: 100%;
+margin-top: 50px; }
+
+.main-container {
+    padding-top: 50px;
+}
+
+.main-container  h1{
+text-align: center;
+}
