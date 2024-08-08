@@ -15,10 +15,10 @@ body {
 
 #map { height: 90vh;
 width: 100%;
-margin-top: 50px; }
+margin-top: 10px; }
 
 .main-container {
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .main-container  h1{
@@ -54,7 +54,7 @@ text-align: center;
     font-weight: bold;
     margin-bottom: 5px;
 }
-
+/*Media query*/
 @media (max-width: 600px) {
     .legend-horizontal {
         width: 90%;
