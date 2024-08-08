@@ -63,6 +63,7 @@ font-family: "Oswald" sans-serif;
     .legend-horizontal {
         width: 90%;
         left: 5%;
+        bottom: 120px;
         padding: 8px;
     }
     .legend-title {
