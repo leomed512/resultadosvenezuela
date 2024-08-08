@@ -20,19 +20,25 @@ crossorigin=""></script>
 </head>
 <body>
 <section class="main-container">
-    <h1>Elecciones en Venezuela | Mapa de Resultados</h1>
+    <h1>Elecciones en Venezuela 2024 | Mapa de Resultados</h1>
+    <section class="message">
+        <p><b>Fuente:</b> base de datos de las votaciones presidenciales del <b>28 de julio de 2024</b> publicados por el equipo de María Corina Machado y Edmundo González en el sitio web <a href="https://resultadosconvzla.com/">resultadosconvzla.com</a></p>
+    </section>
     <div id="map"></div>
-    <footer>
-        <span>this is a footer</span>
-    </footer>
-</section>
+
+</section>    
+<footer class="footer">
+        <img src="https://res.cloudinary.com/arawato666/image/upload/v1691507746/leomedina_web/logo-leo_kvdtus.png"
+         alt="logo leo medina">
+        <span>2024 - Todos los derechos reservados.</span>
+      </footer>
 </body>
 <script>
 var map = L.map('map').setView([5.1632955, -69.4146705], 6);
 
 
 // map limits
-var southWest = L.latLng(-6.0, -80.0); 
+var southWest = L.latLng(-4.0, -80.0); 
 var northEast = L.latLng(15.0, -55.0); 
 var bounds = L.latLngBounds(southWest, northEast);
 
@@ -43,7 +49,7 @@ map.on('drag', function() {
 
 // osm layer
 var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 8,
+maxZoom: 7,
 minZoom: 6,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });

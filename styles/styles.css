@@ -18,11 +18,15 @@ width: 100%;
 margin-top: 10px; }
 
 .main-container {
-    padding-top: 10px;
+    background-color:#D5E8EB;
+    
+    padding-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .main-container  h1{
 text-align: center;
+font-family: "Oswald" sans-serif;
 }
 
 /*leyenda*/
@@ -67,4 +71,31 @@ text-align: center;
     .legend-horizontal .labels {
         font-size: 8px;
     }
+}
+/* footer*/ 
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #040b14;
+    color: #f4f6fd;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.footer img {
+width: 20px;
+margin: 0px 10px;
+}
+
+.message  {
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+    padding: 10px 10px 5px 10px;
+    font-size: 12px;
+}
+.message a {
+    color: #000000;
+    font-weight: 700;
 }
