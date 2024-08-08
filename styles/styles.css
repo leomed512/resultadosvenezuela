@@ -31,9 +31,6 @@ font-family: "Oswald" sans-serif;
 
 /*leyenda*/
 .legend-horizontal {
-    position: absolute;
-    bottom: 70px;
-    left: 10px;
     width: 300px;
     background: white;
     padding: 10px;
