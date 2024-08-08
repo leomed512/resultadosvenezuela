@@ -61,7 +61,7 @@ font-family: "Oswald" sans-serif;
 /*Media query*/
 @media (max-width: 600px) {
     .legend-horizontal {
-        width: 90%;
+        width: 100%;
         left: 5%;
         bottom: 200px;
         padding: 8px;
