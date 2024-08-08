@@ -22,6 +22,9 @@ crossorigin=""></script>
 <section class="main-container">
     <h1>Elecciones en Venezuela | Mapa de Resultados</h1>
     <div id="map"></div>
+    <footer>
+        <span>this is a footer</span>
+    </footer>
 </section>
 </body>
 <script>
@@ -43,34 +46,39 @@ minZoom: 6,
 });
 new_tile.addTo(map);
 
-///// TEST GEOJSON POLYGON
-var polygon = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"coordinates":[[[-66.08866934091276,9.610750944501703],[-66.08866934091276,7.596371555444335],[-64.11507888925502,7.596371555444335],[-64.11507888925502,9.610750944501703],[-66.08866934091276,9.610750944501703]]],"type":"Polygon"}}]};
-//new L.geoJSON(polygon).addTo(map);
-
-/////// municipal polygonsls
+var selectedLayer = null;
 
 function onEachFeature(features, layer) {
-            if (features.properties) {
-                layer.on('click', function() {
-                    var popupContent = "Municipio: " + features.properties.Nomb_Mcpio + "<br>"+ "Estado: " +features.properties.Nom_Estado + "<br>"+ "Edmundo González: " + features.properties.db_suma_EG + " (" + features.properties.db_porc_EG.toFixed(2) + "%)" + "<br>"+ "Nicolás Maduro: " + features.properties.db_suma_NM + " (" + features.properties.db_porc_NM.toFixed(2) + "%)" + "<br>"+ "Otros candidatos: " + features.properties.db_total_o + " (" + features.properties.db_porc_ot.toFixed(2) + "%)"
-                    ;
-                    layer.bindPopup(popupContent).openPopup();
-                });
+    if (features.properties) {
+        layer.on('click', function(e) {
+            if (selectedLayer) {
+                geojsonLayer.resetStyle(selectedLayer);
             }
-        }
+            selectedLayer = layer;
+            layer.setStyle({
+                fillColor: 'yellow'
+            });
+            var popupContent = "Municipio: " + features.properties.Nomb_Mcpio + "<br>"+ 
+                               "Estado: " + features.properties.Nom_Estado + "<br>"+ 
+                               "Edmundo González: " + features.properties.db_suma_EG + " (" + features.properties.db_porc_EG.toFixed(2) + "%)" + "<br>"+ 
+                               "Nicolás Maduro: " + features.properties.db_suma_NM + " (" + features.properties.db_porc_NM.toFixed(2) + "%)" + "<br>"+ 
+                               "Otros candidatos: " + features.properties.db_total_o + " (" + features.properties.db_porc_ot.toFixed(2) + "%)";
+            layer.bindPopup(popupContent).openPopup();
+            L.DomEvent.stopPropagation(e);
+        });
+    }
+}
 
-///color
-
- function getColor(d) {
+function getColor(d) {
     return d > 80 ? '#034e7b' :
            d > 70  ? '#0570b0' :
            d > 60  ? '#3690c0' :
            d > 50  ? '#74a9cf' :
-           d > 40   ? '#a6bddb' :
-           d > 30   ? '#d0d1e6' :
-           d > 20   ? '#ece7f2' :
-           d > 10   ? '#fff7fb': 
-                        '#00000';
+           d > 40  ? '#a6bddb' :
+           d > 30  ? '#d0d1e6' :
+           d > 20  ? '#ece7f2' :
+           d > 10  ? '#fff7fb' :
+                     '#00000';
 }
 
 function style(features) {
@@ -84,21 +92,22 @@ function style(features) {
     };
 }
 
-////finally create the map db_union_corregido.geojson
-        var geojsonLayer = new L.geoJson.ajax("https://raw.githubusercontent.com/leomed512/files/master/prueba_union.geojson", {
-          style: style,
-            onEachFeature: onEachFeature
-        }).addTo(map);
+var geojsonLayer = new L.geoJson.ajax("https://raw.githubusercontent.com/leomed512/files/master/prueba_union.geojson", {
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(map);
 
-/// Layers
+map.on('click', function(e) {
+    if (selectedLayer) {
+        geojsonLayer.resetStyle(selectedLayer);
+        selectedLayer = null;
+    }
+});
+
 var basemaps = {
     "Resultados municipales": geojsonLayer,
-}
+};
 L.control.layers(basemaps).addTo(map);
-
-
-
-// Create a legend
 
 var legend = L.control({position: 'bottomleft'});
 
