@@ -21,9 +21,9 @@ crossorigin=""></script>
 </head>
 <body>
 <section class="main-container">
-    <h1>Elecciones en Venezuela 2024 | Mapas de Resultados</h1>
+    <h1>Elecciones en Venezuela 2024 <br> Mapas de Resultados</h1>
     <section class="message">
-        <p><b>Fuente:</b> base de datos de las votaciones presidenciales del <b>28 de julio de 2024</b> publicados por el equipo de María Corina Machado y Edmundo González en el sitio web <a href="https://resultadosconvzla.com/">resultadosconvzla.com</a></p>
+        <p><b>Fuente:</b> base de datos de las votaciones presidenciales del <b>28 de julio de 2024</b> publicados por el equipo de María Corina Machado y Edmundo González en el sitio web <a href="https://resultadosconvzla.com/">resultadosconvzla.com</a> en su versión 1 del 1ro de agosto de 2024.</p>
     </section>
     <div id="map"></div>
 
@@ -48,24 +48,17 @@ map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: false });
 });
 
-// osm layer
-var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 7,
-minZoom: 6,
-attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
-osm.addTo(map);
 
 // thunderforest
 var new_tile = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
-maxZoom: 8,
+maxZoom: 9,
 minZoom: 6,
 });
 new_tile.addTo(map);
 
-// selected feature and popup information
+// selected feature and popup information for municipios
 var selectedLayer = null;
 
 function onEachFeature(features, layer) {
@@ -89,6 +82,28 @@ function onEachFeature(features, layer) {
     }
 }
 
+
+// selected feature and popup information for states
+function onEachFeatureEstados(features, layer) {
+    if (features.properties) {
+        layer.on('click', function(e) {
+            if (selectedLayer) {
+                estados.resetStyle(selectedLayer);
+            }
+            selectedLayer = layer;
+            layer.setStyle({
+                fillColor: 'yellow'
+            });
+            var popupContent = "Estado: " + features.properties.N_ESTADOS + "<br>" +
+            "Edmundo González: " + features.properties.db_suma_EG + " (" + features.properties.db_porc_EG.toFixed(2) + "%)" + "<br>"+ 
+                               "Nicolás Maduro: " + features.properties.db_suma_NM + " (" + features.properties.db_porc_NM.toFixed(2) + "%)" + "<br>"+ 
+                               "Otros candidatos: " + features.properties.db_total_o + " (" + features.properties.db_porc_ot.toFixed(2) + "%)";
+            layer.bindPopup(popupContent).openPopup();
+            L.DomEvent.stopPropagation(e);
+        });
+    }
+}
+
 /// color gradient
 function getColor(d) {
     return d > 80 ? '#034e7b' :
@@ -101,7 +116,7 @@ function getColor(d) {
            d > 10  ? '#fff7fb' :
                      '#00000';
 }
-
+///estilos
 function style(features) {
     return {
         fillColor: getColor(features.properties.db_porc_EG),
@@ -117,13 +132,17 @@ function style(features) {
 var geojsonLayer = new L.geoJson.ajax("https://raw.githubusercontent.com/leomed512/files/master/prueba_union.geojson", {
     style: style,
     onEachFeature: onEachFeature
-}).addTo(map);
+}).addTo(map); // only adds one layer
+
+
 
 // estados
 var estados = new L.geoJson.ajax("https://raw.githubusercontent.com/leomed512/geojson_estados/master/union_lista_estados.geojson", {
     style: style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+    onEachFeature: onEachFeatureEstados
+}); ///this is added only with layer control
+
+
 
 // reset style for unselected feature
 map.on('click', function(e) {
@@ -137,13 +156,13 @@ map.on('click', function(e) {
 // layers
 var basemaps = {
     "Resultados municipales": geojsonLayer,
-    "Resultados estadales": estados,
+    "Resultados por estado": estados,
 };
 L.control.layers(basemaps).addTo(map);
 
+// Leyenda (común para ambas capas)
 var legend = L.control({position: 'bottomleft'});
 
-// leyend
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend-horizontal');
     div.innerHTML = '<div class="legend-title">Votos por Edmundo González (%)</div>' +
