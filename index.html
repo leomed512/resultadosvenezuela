@@ -160,7 +160,7 @@ var basemaps = {
 };
 L.control.layers(basemaps).addTo(map);
 
-// Leyenda (común para ambas capas)
+// Legend 
 var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
@@ -174,6 +174,35 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
+
+//////// north arrow
+
+var northIcon = L.icon({
+            iconUrl: 'https://res.cloudinary.com/arawato666/image/upload/v1724443852/icons8-north-direction-64_1_tvykio.png', 
+            iconSize: [50, 50], 
+            iconAnchor: [300, 0]
+        });
+var bounds = map.getBounds();
+var northEastCorner = bounds.getNorthEast();
+
+// marker
+var northMarker = L.marker([northEastCorner.lat, northEastCorner.lng], { icon: northIcon }).addTo(map);
+
+// update position
+function updateNorthArrow() {
+    var bounds = map.getBounds();
+    var northEastCorner = bounds.getNorthEast();
+    northMarker.setLatLng([northEastCorner.lat, northEastCorner.lng]);
+}
+
+// relate to scroll and zoom
+map.on('move', updateNorthArrow);
+map.on('zoom', updateNorthArrow);
+
+// call function
+updateNorthArrow();
+
 </script>
 
 </html> 
