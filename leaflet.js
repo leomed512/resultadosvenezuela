@@ -2,7 +2,7 @@ var map = L.map('map').setView([5.1632955, -69.4146705], 6);
 
 
 // map limits
-var southWest = L.latLng(-4.0, -80.0); 
+var southWest = L.latLng(-5.0, -80.0); 
 var northEast = L.latLng(15.0, -55.0); 
 var bounds = L.latLngBounds(southWest, northEast);
 
@@ -13,13 +13,14 @@ map.on('drag', function() {
 
 
 // thunderforest
-var new_tile = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-maxZoom: 9,
-minZoom: 6,
+var new_tile = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}', {
+    maxZoom: 9,
+    minZoom: 6,
+	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	ext: 'png'
 });
 new_tile.addTo(map);
+
 
 // selected feature and popup information for municipios
 var selectedLayer = null;
@@ -121,6 +122,7 @@ var basemaps = {
     "Resultados municipales": geojsonLayer,
     "Resultados por estado": estados,
 };
+
 L.control.layers(basemaps).addTo(map);
 
 // Legend 

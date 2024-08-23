@@ -17,9 +17,10 @@ body {
 width: 100%; }
 
 .main-container {
-    background-color:#D5E8EB;
+    background-color:#262626;
     padding: 20px 5px 0px 5px;
     font-family: Arial, Helvetica, sans-serif;
+    color: #ece7f2;
 }
 
 .main-container  h1{
@@ -33,10 +34,10 @@ font-family: "Oswald" sans-serif;
     bottom: 200px;
     left: 10px;
     width: 300px;
-    background: white;
     padding: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     font: 14px Arial, Helvetica, sans-serif;
+    color: #262626;
 }
 .legend-horizontal .gradient-bar {
     width: 100%;
@@ -95,6 +96,6 @@ margin: 0px 10px;
     font-size: 12px;
 }
 .message a {
-    color: #000000;
-    font-weight: 700;
+    color:#a6bddb;
+   font-weight: 700;
 }
