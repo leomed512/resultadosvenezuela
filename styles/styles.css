@@ -28,7 +28,7 @@ text-align: center;
 font-family: "Oswald" sans-serif;
 }
 
-/*leyenda*/
+/*legend*/
 .legend-horizontal {
     position: fixed;
     bottom: 200px;
@@ -39,6 +39,7 @@ font-family: "Oswald" sans-serif;
     font: 14px Arial, Helvetica, sans-serif;
     color: #262626;
     background-color: #fff7fb;
+    border-radius: 10px;
 }
 .legend-horizontal .gradient-bar {
     width: 100%;
@@ -88,7 +89,7 @@ font-family: "Oswald" sans-serif;
 width: 20px;
 margin: 0px 10px;
 }
-
+/*main text*/
 .message  {
     margin: 0 auto;
     max-width: 600px;
