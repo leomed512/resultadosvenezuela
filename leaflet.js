@@ -144,8 +144,8 @@ legend.addTo(map);
 
 var northIcon = L.icon({
             iconUrl: 'https://res.cloudinary.com/arawato666/image/upload/v1724443852/icons8-north-direction-64_1_tvykio.png', 
-            iconSize: [50, 50], 
-            iconAnchor: [300, -10]
+            iconSize: [40, 40], 
+            iconAnchor: [200, -20]
         });
 var bounds = map.getBounds();
 var northEastCorner = bounds.getNorthEast();
